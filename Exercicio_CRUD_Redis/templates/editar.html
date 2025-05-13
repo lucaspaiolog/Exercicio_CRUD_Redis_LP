@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="mb-4">Editar Tarefa #{{ tarefa.id }}</h1>
+    
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">Campo a ser editado</label>
+            <select class="form-select" name="campo" required>
+                <option value="titulo">Título</option>
+                <option value="descricao">Descrição</option>
+                <option value="status">Status</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Novo valor</label>
+            <input type="text" class="form-control" name="valor" required>
+            <div class="form-text">Para status, use: {{ status_validos|join(', ') }}</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Atualizar</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+    
+    <div class="card mt-4">
+        <div class="card-header">
+            Detalhes Atuais da Tarefa
+        </div>
+        <div class="card-body">
+            <p><strong>Título:</strong> {{ tarefa.titulo }}</p>
+            <p><strong>Descrição:</strong> {{ tarefa.descricao }}</p>
+            <p><strong>Status:</strong> {{ tarefa.status }}</p>
+            <p><strong>Data de Criação:</strong> {{ tarefa.data_criacao }}</p>
+        </div>
+    </div>
+{% endblock %}

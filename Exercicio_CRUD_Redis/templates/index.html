@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class="mb-4">Gerenciador de Tarefas</h1>
+    
+    <a href="{{ url_for('criar_tarefa') }}" class="btn btn-primary mb-3">Criar Nova Tarefa</a>
+    
+    {% if tarefas %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Status</th>
+                        <th>Data de Criação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tarefa in tarefas %}
+                        <tr>
+                            <td>{{ tarefa.id }}</td>
+                            <td>{{ tarefa.titulo }}</td>
+                            <td>
+                                <span class="badge 
+                                    {% if tarefa.status == 'Concluída' %}bg-success
+                                    {% elif tarefa.status == 'Em Progresso' %}bg-warning
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ tarefa.status }}
+                                </span>
+                            </td>
+                            <td>{{ tarefa.data_criacao }}</td>
+                            <td>
+                                <a href="{{ url_for('editar_tarefa', id_tarefa=tarefa.id) }}" class="btn btn-sm btn-info">Editar</a>
+                                <a href="{{ url_for('deletar_tarefa', id_tarefa=tarefa.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja deletar esta tarefa?')">Deletar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">Nenhuma tarefa cadastrada ainda.</div>
+    {% endif %}
+{% endblock %}
